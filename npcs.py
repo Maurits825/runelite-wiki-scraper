@@ -31,15 +31,12 @@ def run():
 
 				is_cox = util.has_template("Chambers of Xeric", code)
 				is_tob = util.has_template("Theatre of Blood", code)
-				if is_tob:
-					doc = TobNpcs.run(name + str(vid), version, npcs)
-				else:
-					continue
+				custom_name = ""
 
 				if is_cox:
-					doc = CoxNpcs.run(name + str(vid), vid, version, npcs)
+					doc, custom_name = CoxNpcs.run(name + str(vid), vid, version, npcs)
 				elif is_tob:
-					doc = TobNpcs.run(name + str(vid), version, npcs)
+					doc, custom_name = TobNpcs.run(name + str(vid), vid, version, npcs)
 				else:
 					doc = util.get_doc_for_id_string(name + str(vid), version, npcs)
 
@@ -54,12 +51,9 @@ def run():
 					attrs = [x.strip() for x in version["attributes"].split(",") if x.strip()]
 					for attr in attrs:
 						doc[f"is{attr[0].upper()}{attr[1:]}"] = True
-				if is_cox:
-					cox_version = str(version["version"]).strip()
-					if not any(filter_str in cox_version for filter_str in ["Normal", "claw", "Enraged"]):
-						doc["name"] += " " + str(version["version"]).strip()
 
-					doc["name"] = doc["name"].replace('(', '').replace(')', '').replace('Challenge Mode', '').strip()
+				if is_cox or is_tob:
+					doc["name"] = custom_name
 
 				for key in npc_trait_keys:
 					try:
