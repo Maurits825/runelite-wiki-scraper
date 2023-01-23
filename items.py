@@ -1,4 +1,3 @@
-import sys
 import traceback
 import re
 import mwparserfromhell as mw
@@ -134,4 +133,4 @@ def run():
 			print("Item {} failed:".format(name))
 			traceback.print_exc()
 
-	util.write_json("items-dps-calc.json", "items-dps-calc.min.json", stats)
+	util.write_json("items-dmg-sim.json", "items-dmg-sim.min.json", stats)
