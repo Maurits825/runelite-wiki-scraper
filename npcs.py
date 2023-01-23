@@ -1,12 +1,10 @@
 import traceback
-import re
 import mwparserfromhell as mw
 import api
 import util
-from typing import *
-import copy
 
 from cox_npcs import CoxNpcs
+from custom_names import CustomNames
 from tob_npcs import TobNpcs
 
 # Modification here to include many more attributes
@@ -31,7 +29,6 @@ def run():
 
 				is_cox = util.has_template("Chambers of Xeric", code)
 				is_tob = util.has_template("Theatre of Blood", code)
-				custom_name = ""
 
 				if is_cox:
 					doc, custom_name = CoxNpcs.run(name + str(vid), vid, version, npcs)
@@ -39,6 +36,7 @@ def run():
 					doc, custom_name = TobNpcs.run(name + str(vid), vid, version, npcs)
 				else:
 					doc = util.get_doc_for_id_string(name + str(vid), version, npcs)
+					custom_name = CustomNames.get_custom_name(version)
 
 				if not doc:
 					continue
@@ -52,7 +50,7 @@ def run():
 					for attr in attrs:
 						doc[f"is{attr[0].upper()}{attr[1:]}"] = True
 
-				if is_cox or is_tob:
+				if is_cox or is_tob or custom_name:
 					doc["name"] = custom_name
 
 				for key in npc_trait_keys:
