@@ -4,6 +4,9 @@ CUSTOM_NAME_MAP = {
     "2042": "Zulrah (Serpentine/Ranged)",
     "2043": "Zulrah (Magma/Melee)",
     "2044": "Zulrah (Tanzanite/Mage)",
+    "12077": "Phantom Muspah (Ranged)",
+    "12078": "Phantom Muspah (Melee)",
+    "12079": "Phantom Muspah (Shielded)",
 }
 
 
